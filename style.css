@@ -17,6 +17,7 @@ body {
   justify-content: center;
   flex-wrap: wrap;
   background-color: #233142;
+  border-radius: 12px;
 }
 
 #title {
@@ -30,6 +31,7 @@ body {
   width: 310px;
   background-color: #455d7a;
   padding-top: 18px;
+  border-radius: 12px;
 }
 
 #display {
@@ -40,7 +42,6 @@ body {
   padding-bottom: 18px;
   font-size: 48px;
   color: #e3e3e3;
-  /* background-color: #e3e3e3; */
 }
 
 button {
@@ -49,6 +50,7 @@ button {
   font-size: 24px;
   align-items: center;
   margin: 4px;
+  border-radius: 12px;
 }
 
 #row5 {

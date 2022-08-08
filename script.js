@@ -1,3 +1,10 @@
+let displayContent = '0';
+let equation = '';
+let firstChar = true;
+
+const digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+const operations = ['+', '-', '*', '/'];
+
 const add = function (x, y) {
   return x + y;
 };
@@ -32,8 +39,69 @@ const operate = function (operator, x, y) {
 };
 
 const processClick = function (e) {
-  console.log(e.target.id);
+  let char = e.target.id;
+
+  // It's a number
+  if (digits.includes(char)) {
+    if (firstChar) {
+      if (char === '0') {
+        return;
+      } else {
+        displayContent = char;
+        equation = char;
+        firstChar = false;
+        updateDisplay();
+        return;
+      }
+    } else {
+      displayContent += char;
+      equation += char;
+      updateDisplay();
+      return;
+    }
+  }
+
+  // It's an operator
+  if (operations.includes(char)) {
+    if (operations.includes(equation[(equation.length = 1)])) {
+      return; // The previous char was also an operator
+    } else {
+      displayContent += ` ${char} `;
+      equation += char;
+      updateDisplay();
+      return;
+    }
+  }
+
+  // It's the clear key
+  if (char === 'clear') {
+    displayContent = '0';
+    equation = '';
+    firstChar = true;
+    updateDisplay();
+    return;
+  }
+
+  // It's the equals key
+  if (char === 'equals') {
+    if (operations.includes(equation[equation.length - 1])) {
+      return; // The previous char was an operator
+    } else {
+      processEquation();
+    }
+  }
+
+  console.log(char);
+  displayContent += char;
+  equation += char;
+  updateDisplay();
 };
+
+const updateDisplay = function () {
+  display.textContent = displayContent;
+};
+
+const display = document.getElementById('display');
 
 const clear = document.getElementById('clear');
 const plusMinus = document.getElementById('plusMinus');

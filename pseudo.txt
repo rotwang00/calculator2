@@ -1,0 +1,41 @@
+Processing clicks
+
+If it's a number
+    if it's the first character of the equation
+        if it's a zero
+            ignore it
+        else
+            reset the display to just the number
+            reset the equation to just the number
+            toggle the first character boolean to false
+    else 
+        add it to the equation 
+        add it to the display
+
+If it's an operator 
+    if the previous click was an operator
+        do nothing
+    else
+        add the operator to the equation
+        to the display add a space, the operator, and another space
+
+If it's an equals sign
+    if the previous click was an operator
+        do nothing
+    else
+        compute the value of the equation
+        put the result in the display
+
+If it's a backspace
+    if the first char boolean is true
+        do nothing
+    else
+        delete the final char of the display
+        delete the final char of the equation
+        if there are now no chars in the display
+            set the display to zero
+
+If it's clear
+    replace the display with zero
+    reset the first character boolean to true
+    delete the entire equation
