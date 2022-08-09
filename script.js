@@ -1,5 +1,5 @@
 let displayContent = '0';
-let equation = '';
+let equation = [];
 let firstChar = true;
 
 const digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
@@ -38,6 +38,28 @@ const operate = function (operator, x, y) {
   }
 };
 
+const processEquation = function () {
+  let answer = 0;
+  let x = '';
+  let oper = '';
+  let y = '';
+
+  while (digits.includes(equation[0])) {
+    x += equation.shift();
+  }
+
+  oper = equation.shift();
+
+  while (digits.includes(equation[0])) {
+    y += equation.shift();
+  }
+
+  answer = operate(oper, x, y);
+  displayContent += ` = ${answer}`;
+  firstChar = true;
+  updateDisplay();
+};
+
 const processClick = function (e) {
   let char = e.target.id;
 
@@ -45,17 +67,20 @@ const processClick = function (e) {
   if (digits.includes(char)) {
     if (firstChar) {
       if (char === '0') {
+        displayContent = '0';
+        equation = [];
+        updateDisplay();
         return;
       } else {
         displayContent = char;
-        equation = char;
+        equation.push(char);
         firstChar = false;
         updateDisplay();
         return;
       }
     } else {
       displayContent += char;
-      equation += char;
+      equation.push(char);
       updateDisplay();
       return;
     }
@@ -63,11 +88,11 @@ const processClick = function (e) {
 
   // It's an operator
   if (operations.includes(char)) {
-    if (operations.includes(equation[(equation.length = 1)])) {
+    if (operations.includes(equation[equation.length - 1])) {
       return; // The previous char was also an operator
     } else {
       displayContent += ` ${char} `;
-      equation += char;
+      equation.push(char);
       updateDisplay();
       return;
     }
@@ -76,25 +101,20 @@ const processClick = function (e) {
   // It's the clear key
   if (char === 'clear') {
     displayContent = '0';
-    equation = '';
+    equation = [];
     firstChar = true;
     updateDisplay();
     return;
   }
 
   // It's the equals key
-  if (char === 'equals') {
+  if (char === '=') {
     if (operations.includes(equation[equation.length - 1])) {
       return; // The previous char was an operator
     } else {
       processEquation();
     }
   }
-
-  console.log(char);
-  displayContent += char;
-  equation += char;
-  updateDisplay();
 };
 
 const updateDisplay = function () {
